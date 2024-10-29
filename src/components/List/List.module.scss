@@ -1,0 +1,98 @@
+.List {
+    text-align: center;
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    &__states {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 20px;
+
+        &_btn {
+            padding: 5px;
+            background-color: #16a3b7;
+            color: #fff;
+            border-radius: 5px;
+            width: 150px;
+
+            &::first-letter {
+                text-transform: uppercase;
+            }
+
+            &_active {
+                padding: 5px;
+                background-color: #024c53;
+                color: #fff;
+                border-radius: 5px;
+                width: 150px;
+
+                &::first-letter {
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
+
+    &__items {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+
+        &_item {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 5px 20px;
+            border: 1px solid gray;
+            margin-bottom: 10px;
+
+            &_text {
+                cursor: pointer;
+
+                &_done {
+                    color: red;
+                    text-decoration: line-through;
+                    cursor: pointer;
+                }
+            }
+
+
+            &_options {
+                display: flex;
+                flex-direction: row;
+
+                &_option {
+                    cursor: pointer;
+
+                    &:not(:last-child) {
+                        margin-right: 20px;
+                    }
+                }
+
+                &_input {
+                    padding: 5px 20px;
+                    border: 1px solid gray;
+                    margin-bottom: 10px;
+                }
+
+            }
+        }
+    }
+
+    &__delete {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        &_btn {
+            width: 250px;
+            background-color: #dc3445;
+            padding: 5px;
+            color: #fff;
+            border-radius: 5px;
+        }
+    }
+}

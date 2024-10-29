@@ -1,0 +1,31 @@
+.Input {
+    text-align: center;
+    margin-bottom: 20px;
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    &__block {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        border: 1px solid gray;
+        border-radius: 5px;
+
+        &_input {
+            margin-bottom: 10px;
+            border: 1px solid gray;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        &_btn {
+            color: #fff;
+            background-color: #16a3b7;
+            border: none;
+            border-radius: 5px;
+            padding: 5px;
+        }
+    }
+}

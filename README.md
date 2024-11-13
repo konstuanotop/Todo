@@ -9,5 +9,8 @@
 - Удаление выполненных задач
 
 Использовался: 
-- Хук useState 
+- Хук useState
+- Хук useContext
 - Условный рендер 
+
+![todo](https://github.com/user-attachments/assets/55199386-965b-4179-b8af-1608f8542da3)

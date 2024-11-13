@@ -3,63 +3,24 @@ import deleteIcon from '../../assets/img/icon_delete.png'
 import editIcon from '../../assets/img/icon_edit.png'
 import doIcon from '../../assets/img/icon_do.png'
 import doneIcon from '../../assets/img/icon_done.png'
-import { Tasks } from '../../types'
-import { ChangeEvent, Dispatch, SetStateAction } from 'react'
+import { useTodo } from '../../context/TodoContext'
 
-interface ListProps {
-    tasks: Tasks[];
-    setTasks: Dispatch<SetStateAction<Tasks[]>>;
-    statusCollection: string[];
-    status: string;
-    setStatus: Dispatch<SetStateAction<string>>;
-}
+const List: React.FC = () => {
 
+    const {
+        tasks,
+        status,
+        toggleTaskStatus,
+        deleteTask,
+        deleteAllTasks,
+        deleteDoneTasks,
+        changeStatus,
+        editTask,
+        editStart,
+        editEnd
+    } = useTodo()
 
-const List: React.FC<ListProps> = ({ tasks, setTasks, statusCollection, status, setStatus }) => {
-
-    const toggleStatus = (i: number) => {
-        setTasks(tasks =>
-            tasks.map((task, index) =>
-                index === i ? { ...task, status: task.status === 'todo' ? 'done' : 'todo' } : task)
-        )
-    }
-
-    const deleteTask = (i: number) => {
-        setTasks(tasks.filter((_, index) => index !== i))
-    }
-
-    const deleteAllTasks = () => {
-        setTasks([])
-    }
-
-    const deleteDoneTasks = () => {
-        setTasks(tasks =>
-            tasks.filter((task) =>
-                task.status !== 'done')
-        )
-    }
-
-    const onClickStatus = (item: string) => {
-        setStatus(item)
-    }
-
-    const editSave = (i: number, event: ChangeEvent<HTMLInputElement>) => {
-        const copy = [...tasks]
-        copy[i].task = event.target.value;
-        setTasks(copy)
-    }
-
-    const editStart = (i: number) => {
-        const copy = [...tasks]
-        copy[i].isEdit = true
-        setTasks(copy)
-    }
-
-    const editEnd = (i: number) => {
-        const copy = [...tasks]
-        copy[i].isEdit = false
-        setTasks(copy)
-    }
+    const statusCollection = ['all', 'done', 'todo']
 
     const edit = tasks.filter((item) => (
         item.status === status ? item.status === status : status === 'all'
@@ -71,7 +32,7 @@ const List: React.FC<ListProps> = ({ tasks, setTasks, statusCollection, status, 
                 element = <input
                     autoFocus
                     value={task.task}
-                    onChange={(event) => editSave(i, event)}
+                    onChange={(event) => editTask(i, event)}
                     onBlur={() => editEnd(i)}
                     className={styles.List__items_item_options_input}
                 />
@@ -80,12 +41,12 @@ const List: React.FC<ListProps> = ({ tasks, setTasks, statusCollection, status, 
                     <div
                         className={
                             task.status === 'todo' ? styles.List__items_item_text : styles.List__items_item_text_done}
-                        onClick={() => toggleStatus(i)}
+                        onClick={() => toggleTaskStatus(i)}
                     >{task.task}</div>
                     <div className={styles.List__items_item_options}>
                         <div
                             className={styles.List__items_item_options_option}
-                            onClick={() => toggleStatus(i)}
+                            onClick={() => toggleTaskStatus(i)}
                         ><img
                                 src={task.status === 'todo' ? doIcon : doneIcon}
                                 alt="Статус"
@@ -118,7 +79,7 @@ const List: React.FC<ListProps> = ({ tasks, setTasks, statusCollection, status, 
                         <button
                             key={item}
                             className={status !== item ? styles.List__states_btn : styles.List__states_btn_active}
-                            onClick={() => onClickStatus(item)}
+                            onClick={() => changeStatus(item)}
                         >{item}</button>
                     ))
                 }

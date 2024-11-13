@@ -1,20 +1,17 @@
-import { Dispatch, KeyboardEvent, SetStateAction } from 'react';
+import { KeyboardEvent, useState } from 'react';
 import styles from './Input.module.scss'
-import { Tasks } from '../../types';
-
-interface InputProps {
-    tasks: Tasks[];
-    setTasks: Dispatch<SetStateAction<Tasks[]>>;
-    value: string;
-    setValue: Dispatch<SetStateAction<string>>;
-}
+import { useTodo } from '../../context/TodoContext';
 
 
-const Input: React.FC<InputProps> = ({ tasks, setTasks, value, setValue }) => {
+const Input: React.FC = () => {
+
+    const { addTask } = useTodo()
+
+    const [value, setValue] = useState('')
 
     const onClickAdd = () => {
         if (value.length > 0) {
-            setTasks([...tasks, { task: value, status: 'todo', isEdit: false }])
+            addTask(value)
             setValue('')
         }
     }
@@ -22,7 +19,7 @@ const Input: React.FC<InputProps> = ({ tasks, setTasks, value, setValue }) => {
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             if (value.length > 0) {
-                setTasks([...tasks, { task: value, status: 'todo', isEdit: false }])
+                addTask(value)
                 setValue('')
             }
         }

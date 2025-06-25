@@ -1,7 +1,7 @@
 import { ChangeEvent, createContext, ReactNode, useContext, useState } from "react";
 import { Tasks } from "../types";
 
-interface TodoContextProps {
+export interface TodoContextProps {
     tasks: Tasks[];
     status: string;
     addTask: (task: string) => void;
@@ -13,6 +13,7 @@ interface TodoContextProps {
     editTask: (i: number, event: ChangeEvent<HTMLInputElement>) => void;
     editStart: (i: number) => void;
     editEnd: (i: number) => void;
+    tasksLeft: () => number;
 }
 
 interface TodoProviderProps {
@@ -37,7 +38,7 @@ export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
     }
 
     const deleteTask = (i: number) => {
-        setTasks(tasks.filter((_, index) => index !== i))
+        setTasks(prevTasks => prevTasks.filter((_, index) => index !== i));
     }
 
     const deleteAllTasks = () => {
@@ -73,6 +74,10 @@ export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
         setTasks(copy)
     }
 
+    const tasksLeft = () => {
+        return tasks.filter(task => task.status === 'todo').length;
+    }
+
     return (
         <TodoContext.Provider value={{
             tasks,
@@ -85,7 +90,8 @@ export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
             changeStatus,
             editTask,
             editStart,
-            editEnd
+            editEnd,
+            tasksLeft
         }}>
             {children}
         </TodoContext.Provider>

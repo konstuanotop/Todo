@@ -5,6 +5,7 @@ import doIcon from '../../assets/img/icon_do.png'
 import doneIcon from '../../assets/img/icon_done.png'
 import { useTodo } from '../../context/TodoContext'
 
+
 const List: React.FC = () => {
 
     const {
@@ -17,7 +18,8 @@ const List: React.FC = () => {
         changeStatus,
         editTask,
         editStart,
-        editEnd
+        editEnd,
+        tasksLeft
     } = useTodo()
 
     const statusCollection = ['all', 'done', 'todo']
@@ -37,7 +39,7 @@ const List: React.FC = () => {
                     className={styles.List__items_item_options_input}
                 />
             } else {
-                element = <div key={i} className={styles.List__items_item}>
+                element = <div key={i} className={styles.List__items_item} data-testing='task-item'>
                     <div
                         className={
                             task.status === 'todo' ? styles.List__items_item_text : styles.List__items_item_text_done}
@@ -73,7 +75,7 @@ const List: React.FC = () => {
     return (
         <div className={styles.List}>
             <h2>TodoList</h2>
-            <div className={styles.List__states}>
+            <div className={styles.List__states} data-testid='filter-buttons'>
                 {
                     statusCollection.map((item) => (
                         <button
@@ -90,6 +92,7 @@ const List: React.FC = () => {
                 }
 
             </div>
+            <div className={styles.List__left}>Tasks left: {tasksLeft()}</div>
             <div className={styles.List__delete}>
                 <button
                     className={styles.List__delete_btn}
